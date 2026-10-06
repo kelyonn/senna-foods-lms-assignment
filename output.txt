@@ -1,0 +1,18 @@
+DELIVERY    SHOP    SHOP NAME                 ITEMS  WEIGHT_KG  STATUS
+--------------------------------------------------------------------------------
+0080001234  100245  Sri Balaji Stores             2       27.6  OK
+0080001235  100317  Ganesh Mart                   2       17.2  OK
+0080001236  100402  New Fresh Mart                1          ?  FLAGGED
+            -> item 10: missing weight (CSV line 6)
+0080001237  100999  Om Provisions                 1        5.6  FLAGGED
+            -> unknown shop 100999 - not in LMS shop master
+0080001238  100118  Lakshmi Traders               3       25.2  OK
+0080001239  100533  Annapoorna Supermarket        2       98.5  OK
+0080001240  100274  Royal Kirana                  1       51.0  OK
+0080001241  100650  Daily Needs Store             2       12.0  OK
+0080001242  100381  Venkateshwara Provisions      2       25.0  OK
+0080001243  100712  Green Basket                  2       51.6  OK
+0080001244  100159  Sai Ram Stores                1       12.0  OK
+0080001245  100826  City Fresh Mart               2       13.6  OK
+--------------------------------------------------------------------------------
+12 deliveries, 21 item rows: 10 OK, 2 flagged

@@ -1,0 +1,26 @@
+entity,field_name,type,required,description
+delivery,delivery_number,text(10),yes,SAP delivery number; keep leading zeros
+delivery,shop_code,text,yes,Shop code without leading zeros
+delivery,planned_date,date (YYYY-MM-DD),yes,Date the delivery should reach the shop
+delivery,total_weight_kg,decimal,yes,Sum of the item weights in the delivery
+delivery,status,text,yes,Set by the LMS; starts as NEW
+delivery_item,delivery_number,text(10),yes,Links the item to its delivery
+delivery_item,line_number,integer,yes,Item line number without leading zeros
+delivery_item,product_code,text,yes,Product code
+delivery_item,product_name,text,no,Product description
+delivery_item,quantity,integer,yes,Quantity ordered
+delivery_item,unit,text,yes,CASE or PIECE
+delivery_item,weight_kg,decimal,yes,Gross weight of the line in kg
+shop,shop_code,text,yes,Shop code without leading zeros
+shop,shop_name,text,yes,Shop name
+shop,city,text,yes,City
+shop,pin_code,text(6),yes,PIN code
+shop,latitude,decimal,no,Map pin latitude (added in the LMS)
+shop,longitude,decimal,no,Map pin longitude (added in the LMS)
+shop,zone_code,text,no,Delivery zone (added in the LMS)
+shop,delivery_window,text,no,Hours the shop accepts deliveries
+product,product_code,text,yes,Product code
+product,product_name,text,yes,Product name
+product,unit,text,yes,Selling unit: CASE or PIECE
+product,weight_kg_per_unit,decimal,yes,Weight of one unit in kg
+product,volume_m3_per_unit,decimal,no,Size of one unit in cubic metres
