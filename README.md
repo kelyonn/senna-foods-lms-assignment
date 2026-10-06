@@ -25,3 +25,7 @@ See [`output.txt`](output.txt): 12 deliveries, 21 item rows, 10 OK, 2 flagged (`
 
 - Every column is read as text so leading zeros survive. VBELN is padded back to 10 digits in case a spreadsheet stripped them.
 - Shop codes are compared the LMS way, without leading zeros (`0000100999` → `100999`).
+
+## Mini-LMS
+
+The design from the assignment, running as code with 13 automated tests: see [`mini_lms/`](mini_lms/README.md).

@@ -1,0 +1,32 @@
+
+=== 1. SAP file imported: bad deliveries are on hold, the rest loaded
+{
+  "0080001236": [
+    "MISSING_WEIGHT: item 10 has no weight"
+  ],
+  "0080001237": [
+    "UNKNOWN_SHOP: 100999 is not in the LMS shop master"
+  ]
+}
+
+=== 2. Partner app sends the sample webhook (Ganesh Mart, 4 damaged)
+(200, {'status': 'accepted', 'event_id': 'evt_01J9ZQ4K7M2X'})
+
+=== 3. Same event again (phone retried after a timeout): duplicate ignored
+(200, {'status': 'duplicate ignored', 'event_id': 'evt_01J9ZQ4K7M2X'})
+
+=== 4. Return with no reason: rejected, nothing reaches SAP
+(422, {'error': 'FG-3010: returned 4 needs a valid return_reason'})
+
+=== 5. Event signed with the wrong secret: rejected
+(401, {'error': 'bad signature'})
+
+=== 6. Results file for SAP (one row per item)
+sap_delivery_number,sap_item_number,shop_code,material,planned_qty,delivered_qty,returned_qty,unit,return_reason,item_result,delivery_result,delivered_at,trip_id,truck_number,pod_photo_url
+0080001235,000010,0000100317,FG-1001,10,10,0,CS,,DELIVERED,PART_DELIVERED,2026-10-02T11:40:03+05:30,TRP-BLR-20261002-07,KA-01-AB-1234,https://partner.example.com/pod/TRP-BLR-20261002-07/2.jpg
+0080001235,000020,0000100317,FG-3010,40,36,4,CS,DAMAGED,PART_DELIVERED,PART_DELIVERED,2026-10-02T11:40:03+05:30,TRP-BLR-20261002-07,KA-01-AB-1234,https://partner.example.com/pod/TRP-BLR-20261002-07/2.jpg
+
+
+=== 7. Asking again: already sent, so only the header comes back
+sap_delivery_number,sap_item_number,shop_code,material,planned_qty,delivered_qty,returned_qty,unit,return_reason,item_result,delivery_result,delivered_at,trip_id,truck_number,pod_photo_url
+
