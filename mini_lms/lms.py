@@ -205,7 +205,7 @@ class LMS:
         return None
 
     # --------------------------------------------------------- 3. LMS -> SAP
-    def export_sap_results(self):
+    def export_sap_results(self, consume=True):
         """CSV for SAP: one row per item, codes padded back to SAP format.
         Only deliveries not exported before are included, so a late result goes in the next file."""
         out = io.StringIO()
@@ -218,7 +218,7 @@ class LMS:
 
         for vbeln, d in self.deliveries.items():
             res = d["result"]
-            if res is None or vbeln in self.exported:
+            if res is None or (consume and vbeln in self.exported):
                 continue
             for line, item in sorted(d["items"].items()):
                 r = res["lines"][line]
@@ -239,8 +239,9 @@ class LMS:
                     "truck_number": res["truck_number"],
                     "pod_photo_url": res["pod_photo_url"],
                 })
-            self.exported.add(vbeln)
-            d["status"] = "SENT_TO_SAP"
+            if consume:
+                self.exported.add(vbeln)
+                d["status"] = "SENT_TO_SAP"
         return out.getvalue()
 
 

@@ -6,7 +6,7 @@ Python 3 standard library only. Nothing to install.
 | File | What it does |
 |---|---|
 | `lms.py` | The logic: import the SAP file, handle webhooks, export results for SAP |
-| `server.py` | Tiny HTTP server: `POST /api/v1/webhooks/partner-app`, `GET /api/v1/holds`, `GET /api/v1/sap/results.csv` |
+| `server.py` | Tiny HTTP server with a one-page dashboard at `/`, plus `POST /api/v1/webhooks/partner-app`, `GET /api/v1/holds`, `GET /api/v1/deliveries`, `GET /api/v1/sap/results.csv` |
 | `test_lms.py` | The Task 2 Given/When/Then test cases as automated tests (13 tests) |
 | `demo.py` | Starts the server and plays the partner app with real signed HTTP requests |
 
@@ -15,7 +15,7 @@ Python 3 standard library only. Nothing to install.
 ```bash
 python3 -m unittest -v test_lms   # 13 tests
 python3 demo.py                   # end-to-end walk-through
-python3 server.py                 # run the server on :8080
+python3 server.py                 # run the server, then open http://127.0.0.1:8080/
 ```
 
 ## Rules it enforces
@@ -25,5 +25,7 @@ python3 server.py                 # run the server on :8080
 - **Webhooks:** the `X-Signature` (HMAC-SHA256 of the body) is checked → `401` if wrong. A repeated `event_id` → `200`, nothing changes. Quantities that don't add up, or a return with no reason → `422`. Only a saved event gets a 2xx, so the app keeps retrying otherwise.
 - **Late events:** results are ordered by `recorded_at`, so an old event can't overwrite a newer one. SAP gets `recorded_at`, not `sent_at`.
 - **Results go to SAP per item**, in SAP's format, and each delivery is exported once.
+
+The dashboard at `/` has buttons to play the partner app (sample result, duplicate event, return with no reason, wrong signature, create the missing shop) and shows the deliveries and the SAP results preview. `GET /api/v1/sap/results.csv` marks deliveries as sent to SAP; add `?peek=1` to preview without that.
 
 See `test_output.txt` and `demo_output.txt` for sample runs.
